@@ -1,0 +1,10 @@
+# Neovim runtime/cache/state files should not live in the config repo
+.lazy/
+.luarocks/
+spell/*.add.spl
+spell/*.add.sug
+
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo
