@@ -6,7 +6,12 @@ local function lsp_keymap(buffer, mode, lhs, rhs, desc)
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("ink-lsp-keymaps", {
+		clear = true,
+	}),
+
 	desc = "Set LSP keymaps",
+
 	callback = function(event)
 		lsp_keymap(event.buf, "n", "gd", vim.lsp.buf.definition, "Go to definition")
 		lsp_keymap(event.buf, "n", "gD", vim.lsp.buf.declaration, "Go to declaration")
@@ -34,7 +39,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			})
 		end, "Next diagnostic")
 
-		lsp_keymap(event.buf, "n", "<leader>f", function()
+		lsp_keymap(event.buf, "n", "<leader>lf", function()
 			vim.lsp.buf.format({
 				async = true,
 				bufnr = event.buf,

@@ -1,4 +1,5 @@
 require("ink.lsp.keymaps")
+require("ink.lsp.servers")
 
 vim.diagnostic.config({
 	signs = true,
@@ -9,8 +10,4 @@ vim.diagnostic.config({
 		border = "rounded",
 		source = true,
 	},
-})
-
-vim.lsp.enable({
-	"clangd",
 })

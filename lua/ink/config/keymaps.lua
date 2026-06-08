@@ -54,3 +54,59 @@ keymap("x", "<leader>j", ":move '>+1<cr>gv=gv", {
 keymap("x", "<leader>k", ":move '<-2<cr>gv=gv", {
 	desc = "Move selection up",
 })
+
+-- ============================================================================
+-- Fuzzy finding
+-- ============================================================================
+local fzf = require("fzf-lua")
+
+vim.keymap.set("n", "<leader>ff", fzf.files, {
+	desc = "Find files",
+})
+
+vim.keymap.set("n", "<leader>fg", fzf.live_grep, {
+	desc = "Live grep",
+})
+
+vim.keymap.set("n", "<leader>fb", fzf.buffers, {
+	desc = "Find buffers",
+})
+
+vim.keymap.set("n", "<leader>fh", fzf.help_tags, {
+	desc = "Find help",
+})
+
+vim.keymap.set("n", "<leader>fo", fzf.oldfiles, {
+	desc = "Find old files",
+})
+
+vim.keymap.set("n", "<leader>fk", fzf.keymaps, {
+	desc = "Find keymaps",
+})
+
+vim.keymap.set("n", "<leader>fc", fzf.commands, {
+	desc = "Find commands",
+})
+
+vim.keymap.set("n", "<leader>fs", fzf.lsp_document_symbols, {
+	desc = "Find document symbols",
+})
+
+vim.keymap.set("n", "<leader>fd", fzf.diagnostics_document, {
+	desc = "Find document diagnostics",
+})
+
+-- ============================================================================
+-- Git visibility
+-- ============================================================================
+vim.keymap.set("n", "<leader>gs", fzf.git_status, {
+	desc = "Git status",
+})
+
+vim.keymap.set("n", "<leader>gc", fzf.git_commits, {
+	desc = "Git commits",
+})
+
+vim.keymap.set("n", "<leader>gb", fzf.git_branches, {
+	desc = "Git branches",
+})
