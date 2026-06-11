@@ -38,6 +38,40 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- ============================================================================
+-- Format
+-- ============================================================================
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	desc = "Format C and C++ files before saving",
+	pattern = { "*.c", "*.h", "*.cpp", "*.hpp", "*.cc", "*.cxx", "*.hh", "*.hxx" },
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+
+		local clang_format = vim.fs.find(".clang-format", {
+			path = vim.fs.dirname(args.file),
+			upward = true,
+			type = "file",
+			limit = 1,
+		})[1]
+
+		if clang_format == nil then
+			return
+		end
+
+		vim.lsp.buf.format({
+			bufnr = args.buf,
+			async = false,
+			timeout_ms = 2000,
+			filter = function(client)
+				return client.name == "clangd"
+			end,
+		})
+	end,
+})
+
+-- ============================================================================
 -- Whitespace cleanup
 -- ============================================================================
 
