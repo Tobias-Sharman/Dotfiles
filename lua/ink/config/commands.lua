@@ -1,3 +1,7 @@
+-- ============================================================================
+-- Colour scheme
+-- ============================================================================
+
 local palettes = require("ink.palettes")
 local state = require("ink.state")
 
@@ -19,3 +23,31 @@ end, {
 		return palettes.names()
 	end,
 })
+
+-- ============================================================================
+-- Cmake toolings
+-- ============================================================================
+
+local M = {}
+
+local function run(command)
+	vim.cmd("!" .. command)
+end
+
+function M.cmake_configure()
+	run("cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && ln -sf build/compile_commands.json compile_commands.json")
+end
+
+function M.cmake_build()
+	run("cmake --build build")
+end
+
+function M.cmake_configure_and_build()
+	run("cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && ln -sf build/compile_commands.json compile_commands.json && cmake --build build")
+end
+
+function M.cmake_test()
+	run("ctest --test-dir build --output-on-failure")
+end
+
+return M

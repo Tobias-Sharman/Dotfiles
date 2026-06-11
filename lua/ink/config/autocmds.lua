@@ -1,3 +1,5 @@
+local commands = require("ink.config.commands")
+
 -- ============================================================================
 -- Treesitter
 -- ============================================================================
@@ -103,4 +105,19 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 		pcall(vim.api.nvim_win_set_cursor, 0, cursor)
 	end,
+})
+
+-- ============================================================================
+-- Cmake toolings
+-- ============================================================================
+
+local group = vim.api.nvim_create_augroup("InkCMake", {
+	clear = true,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	group = group,
+	pattern = { "CMakeLists.txt", "*.cmake" },
+	callback = commands.cmake_configure,
+	desc = "Configure CMake after CMake files change",
 })

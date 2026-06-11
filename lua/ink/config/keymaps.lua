@@ -2,6 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 local keymap = vim.keymap.set
+local commands = require("ink.config.commands")
 
 -- ============================================================================
 -- Files
@@ -109,4 +110,24 @@ vim.keymap.set("n", "<leader>gc", fzf.git_commits, {
 
 vim.keymap.set("n", "<leader>gb", fzf.git_branches, {
 	desc = "Git branches",
+})
+
+-- ============================================================================
+-- Cmake toolings
+-- ============================================================================
+
+vim.keymap.set("n", "<leader>cc", commands.cmake_configure, {
+	desc = "CMake configure",
+})
+
+vim.keymap.set("n", "<leader>cb", commands.cmake_build, {
+	desc = "CMake build",
+})
+
+vim.keymap.set("n", "<leader>cr", commands.cmake_configure_and_build, {
+	desc = "CMake configure and build",
+})
+
+vim.keymap.set("n", "<leader>ct", commands.cmake_test, {
+	desc = "CMake test",
 })
