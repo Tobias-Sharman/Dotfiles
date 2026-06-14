@@ -1,29 +1,15 @@
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-vim.lsp.config("clangd", {
-	capabilities = capabilities,
+local servers = {
+	"clangd",
+	"lua_ls",
+}
 
-	cmd = {
-		"clangd",
-	},
+for _, server in ipairs(servers) do
+	local config = require("ink.lsp.servers." .. server)
 
-	filetypes = {
-		"c",
-		"cpp",
-		"objc",
-		"objcpp",
-		"cuda",
-	},
+	config.capabilities = capabilities
 
-	root_markers = {
-		".clangd",
-		".clang-tidy",
-		".clang-format",
-		"compile_commands.json",
-		"compile_flags.txt",
-		"configure.ac",
-		".git",
-	},
-})
-
-vim.lsp.enable("clangd")
+	vim.lsp.config(server, config)
+	vim.lsp.enable(server)
+end
