@@ -1,3 +1,5 @@
+local format = require("ink.config.format")
+
 local function lsp_keymap(buffer, mode, lhs, rhs, desc)
 	vim.keymap.set(mode, lhs, rhs, {
 		buffer = buffer,
@@ -56,10 +58,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, "Next diagnostic")
 
 		lsp_keymap(event.buf, "n", "<leader>lf", function()
-			vim.lsp.buf.format({
-				async = true,
-				bufnr = event.buf,
-			})
+			format.format(event.buf)
 		end, "Format buffer")
 	end,
 })

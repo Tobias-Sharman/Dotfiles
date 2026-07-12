@@ -4,6 +4,16 @@ vim.pack.add({
 		src = "https://github.com/neovim/nvim-lspconfig",
 	},
 
+	-- Formatting
+	{
+		src = "https://github.com/stevearc/conform.nvim",
+	},
+
+	-- Linting
+	{
+		src = "https://github.com/mfussenegger/nvim-lint",
+	},
+
 	-- Completion
 	{
 		src = "https://github.com/Saghen/blink.cmp",
@@ -41,6 +51,10 @@ vim.pack.add({
 		src = "https://github.com/OXY2DEV/markview.nvim",
 	},
 })
+
+require("ink.config.format").setup()
+
+require("ink.config.lint").setup()
 
 require("blink.cmp").setup({
 	keymap = {
