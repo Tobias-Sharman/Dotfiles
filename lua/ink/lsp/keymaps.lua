@@ -13,6 +13,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "Set LSP keymaps",
 
 	callback = function(event)
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+		if client and client:supports_method("textDocument/inlayHint", event.buf) then
+			vim.lsp.inlay_hint.enable(true, {
+				bufnr = event.buf,
+			})
+
+			lsp_keymap(event.buf, "n", "<leader>th", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({
+					bufnr = event.buf,
+				}), {
+					bufnr = event.buf,
+				})
+			end, "Toggle inlay hints")
+		end
+
 		lsp_keymap(event.buf, "n", "gd", vim.lsp.buf.definition, "Go to definition")
 		lsp_keymap(event.buf, "n", "gD", vim.lsp.buf.declaration, "Go to declaration")
 		lsp_keymap(event.buf, "n", "gr", vim.lsp.buf.references, "Go to references")
