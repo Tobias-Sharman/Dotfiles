@@ -43,7 +43,9 @@ function M.cmake_build()
 end
 
 function M.cmake_configure_and_build()
-	run("cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && ln -sf build/compile_commands.json compile_commands.json && cmake --build build")
+	run(
+		"cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && ln -sf build/compile_commands.json compile_commands.json && cmake --build build"
+	)
 end
 
 function M.cmake_test()

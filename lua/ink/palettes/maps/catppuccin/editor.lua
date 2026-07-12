@@ -3,13 +3,9 @@ local U = require("ink.palettes.maps.catppuccin.util")
 local M = {}
 
 function M.from_palette(cat, flavour)
-	local cursor_line = U.vary(
-		flavour,
-		{
-			latte = U.lighten(cat.mantle, 0.70, cat.base),
-		},
-		U.darken(cat.surface0, 0.64, cat.base)
-	)
+	local cursor_line = U.vary(flavour, {
+		latte = U.lighten(cat.mantle, 0.70, cat.base),
+	}, U.darken(cat.surface0, 0.64, cat.base))
 
 	return {
 		ColorColumn = { bg = cat.surface0 }, -- used for the columns set with 'colorcolumn'

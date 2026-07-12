@@ -10,13 +10,9 @@ function M.from_palette(cat, flavour)
 	local ok = cat.green
 	local darkening_percentage = 0.095
 
-	local inlay_hint_bg = U.vary(
-		flavour,
-		{
-			latte = U.lighten(cat.mantle, 0.70, cat.base),
-		},
-		U.darken(cat.surface0, 0.64, cat.base)
-	)
+	local inlay_hint_bg = U.vary(flavour, {
+		latte = U.lighten(cat.mantle, 0.70, cat.base),
+	}, U.darken(cat.surface0, 0.64, cat.base))
 
 	return {
 		-- These groups are for the native LSP client.

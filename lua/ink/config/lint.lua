@@ -47,7 +47,8 @@ function M.lint(bufnr)
 
 	local ft = vim.bo[bufnr].filetype
 
-	if ft == "sql"
+	if
+		ft == "sql"
 		and not has_name_upward(bufnr, {
 			".sqlfluff",
 			"pyproject.toml",
@@ -58,13 +59,11 @@ function M.lint(bufnr)
 		return
 	end
 
-	if ft == "go"
-		and not has_name_upward(bufnr, {
-			"go.work",
-			"go.mod",
-			".git",
-		})
-	then
+	if ft == "go" and not has_name_upward(bufnr, {
+		"go.work",
+		"go.mod",
+		".git",
+	}) then
 		return
 	end
 
