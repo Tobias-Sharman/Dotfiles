@@ -1,11 +1,16 @@
 local commands = require("ink.config.commands")
 
+local group = vim.api.nvim_create_augroup("InkAutocmds", {
+	clear = true,
+})
+
 -- ============================================================================
 -- Treesitter
 -- ============================================================================
 
 -- Try to enable built-in Treesitter highlighting.
 vim.api.nvim_create_autocmd("FileType", {
+	group = group,
 	desc = "Start built-in Treesitter highlighting where available",
 	pattern = { "c", "cpp", "lua", "vim", "vimdoc", "markdown" },
 	callback = function()
@@ -18,6 +23,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================================================
 
 vim.api.nvim_create_autocmd("FileType", {
+	group = group,
 	desc = "Enable spellcheck for prose-like files",
 	pattern = { "markdown", "text", "gitcommit" },
 	callback = function()
@@ -31,6 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================================================
 
 vim.api.nvim_create_autocmd("TextYankPost", {
+	group = group,
 	desc = "Highlight yanked text",
 	callback = function()
 		vim.highlight.on_yank({
@@ -44,6 +51,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- ============================================================================
 
 vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
 	desc = "Format C and C++ files before saving",
 	pattern = { "*.c", "*.h", "*.cpp", "*.hpp", "*.cc", "*.cxx", "*.hh", "*.hxx" },
 	callback = function(args)
@@ -73,11 +81,141 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
+	desc = "Format Lua files before saving",
+	pattern = "*.lua",
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+
+		if vim.fn.executable("stylua") == 0 then
+			return
+		end
+
+		local file = vim.api.nvim_buf_get_name(args.buf)
+
+		if file == "" then
+			return
+		end
+
+		local stylua_config = vim.fs.find({ "stylua.toml", ".stylua.toml" }, {
+			path = vim.fs.dirname(file),
+			upward = true,
+			type = "file",
+			limit = 1,
+		})[1]
+
+		if stylua_config == nil then
+			return
+		end
+
+		local text = table.concat(vim.api.nvim_buf_get_lines(args.buf, 0, -1, false), "\n")
+
+		local result = vim.system({
+			"stylua",
+			"--config-path",
+			stylua_config,
+			"--stdin-filepath",
+			file,
+			"-",
+		}, {
+			stdin = text,
+			text = true,
+		}):wait()
+
+		if result.code ~= 0 then
+			vim.notify(result.stderr or "stylua failed", vim.log.levels.ERROR)
+			return
+		end
+
+		vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, vim.split(result.stdout, "\n", { plain = true }))
+	end,
+})
+
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+-- 	group = group,
+-- 	desc = "Format Nix files before saving",
+-- 	pattern = "*.nix",
+-- 	callback = function(args)
+-- 		if vim.bo[args.buf].buftype ~= "" then
+-- 			return
+-- 		end
+--
+-- 		if vim.fn.executable("nixfmt") == 0 then
+-- 			return
+-- 		end
+--
+-- 		vim.lsp.buf.format({
+-- 			bufnr = args.buf,
+-- 			async = false,
+-- 			timeout_ms = 2000,
+-- 			filter = function(client)
+-- 				return client.name == "nil"
+-- 			end,
+-- 		})
+-- 	end,
+-- })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
+	desc = "Format shell files before saving",
+	pattern = { "*.sh", "*.bash", "*.zsh", "*.command" },
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+
+		if vim.fn.executable("shfmt") == 0 then
+			return
+		end
+
+		vim.system({ "shfmt", "-w", args.file }):wait()
+		vim.cmd.edit()
+	end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
+	desc = "Format SQL files before saving",
+	pattern = "*.sql",
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+
+		if vim.fn.executable("sqlfluff") == 0 then
+			return
+		end
+
+		local sqlfluff_config = vim.fs.find({
+			".sqlfluff",
+			"pyproject.toml",
+			"setup.cfg",
+			"tox.ini",
+		}, {
+			path = vim.fs.dirname(args.file),
+			upward = true,
+			type = "file",
+			limit = 1,
+		})[1]
+
+		if sqlfluff_config == nil then
+			return
+		end
+
+		vim.system({ "sqlfluff", "format", "--force", args.file }):wait()
+		vim.cmd.edit()
+	end,
+})
+
 -- ============================================================================
 -- Whitespace cleanup
 -- ============================================================================
 
 vim.api.nvim_create_autocmd("BufWritePre", {
+	group = group,
 	desc = "Remove trailing whitespace and extra blank lines at EOF",
 	callback = function()
 		if vim.bo.buftype ~= "" then
@@ -111,13 +249,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Cmake toolings
 -- ============================================================================
 
-local group = vim.api.nvim_create_augroup("InkCMake", {
-	clear = true,
-})
-
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = group,
-	pattern = { "CMakeLists.txt", "*.cmake" },
-	callback = commands.cmake_configure,
-	desc = "Configure CMake after CMake files change",
-})
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	group = group,
+-- 	pattern = { "CMakeLists.txt", "*.cmake" },
+-- 	callback = commands.cmake_configure,
+-- 	desc = "Configure CMake after CMake files change",
+-- })

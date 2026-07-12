@@ -3,6 +3,7 @@ local capabilities = require("blink.cmp").get_lsp_capabilities()
 local servers = {
 	"clangd",
 	"lua_ls",
+	-- "nil",
 }
 
 for _, server in ipairs(servers) do

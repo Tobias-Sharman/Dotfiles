@@ -131,3 +131,23 @@ vim.keymap.set("n", "<leader>cr", commands.cmake_configure_and_build, {
 vim.keymap.set("n", "<leader>ct", commands.cmake_test, {
 	desc = "CMake test",
 })
+
+-- ============================================================================
+-- Markdown preview
+-- ============================================================================
+
+vim.keymap.set("n", "<leader>mdp", "<cmd>Markview splitToggle<cr>", {
+	desc = "Toggle Markdown preview split",
+})
+
+vim.keymap.set("n", "<leader>mdo", "<cmd>Markview splitOpen<cr>", {
+	desc = "Open Markdown preview split",
+})
+
+vim.keymap.set("n", "<leader>mdc", "<cmd>Markview splitClose<cr>", {
+	desc = "Close Markdown preview split",
+})
+
+vim.keymap.set("n", "<leader>mdr", "<cmd>Markview splitRedraw<cr>", {
+	desc = "Redraw Markdown preview split",
+})

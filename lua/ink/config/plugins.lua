@@ -34,6 +34,12 @@ vim.pack.add({
 	{
 		src = "https://github.com/nvim-lualine/lualine.nvim",
 	},
+
+	-- Markdown preview
+
+	{
+		src = "https://github.com/OXY2DEV/markview.nvim",
+	},
 })
 
 require("blink.cmp").setup({
@@ -107,6 +113,20 @@ require("lualine").setup({
 		},
 		lualine_z = {
 			"location",
+		},
+	},
+})
+
+require("markview").setup({
+	preview = {
+		enable = true,
+
+		icon_provider = "internal", -- you have nvim-web-devicons installed
+		debounce = 0,
+
+		splitview_winopts = {
+			split = "right",
+			win = 0,
 		},
 	},
 })
