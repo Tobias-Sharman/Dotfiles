@@ -1,0 +1,128 @@
+add_newline = false
+command_timeout = 1000
+
+format = "$directory$git_branch$git_status$git_state$sudo$character"
+right_format = "$python$nodejs$rust$golang${custom.c_std}${custom.cxx_std}$cmd_duration$status"
+
+[directory]
+format = "[󰉋 $path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncate_to_repo = true
+style = "bold blue"
+read_only = " 󰌾"
+read_only_style = "bold red"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bold purple"
+truncation_length = 32
+truncation_symbol = "…"
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "bold red"
+conflicted = " "
+stashed = " "
+deleted = "-${count} "
+renamed = "󰄾${count} "
+modified = "!${count} "
+staged = "+${count} "
+untracked = "?${count} "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+
+[git_state]
+format = "[ $state( $progress_current/$progress_total)]($style) "
+style = "bold yellow"
+
+[sudo]
+disabled = false
+symbol = "󰌾 "
+format = "[$symbol]($style)"
+style = "bold red"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold purple)"
+
+[python]
+symbol = " "
+format = "[$symbol$version( $virtualenv)]($style) "
+version_format = "${major}.${minor}"
+style = "bold yellow"
+
+[nodejs]
+symbol = " "
+format = "[$symbol$version]($style) "
+version_format = "v${major}"
+style = "bold green"
+
+[rust]
+symbol = " "
+format = "[$symbol$version]($style) "
+version_format = "${major}.${minor}"
+style = "bold red"
+
+[golang]
+symbol = "󰟓 "
+format = "[$symbol$version]($style) "
+version_format = "${major}.${minor}"
+style = "bold cyan"
+
+[custom.c_std]
+command = '''
+d="$PWD"
+while [ "$d" != "/" ]; do
+	if [ -f "$d/CMakeLists.txt" ]; then
+		grep -oE 'c_std_[0-9]+' "$d/CMakeLists.txt" | grep -oE '[0-9]+' | head -1
+		break
+	fi
+	d=$(dirname "$d")
+done
+'''
+when = '''
+d="$PWD"
+while [ "$d" != "/" ]; do
+	[ -f "$d/CMakeLists.txt" ] && exit 0
+	d=$(dirname "$d")
+done
+exit 1
+'''
+format = "([ $output]($style) )"
+style = "bold blue"
+
+[custom.cxx_std]
+command = '''
+d="$PWD"
+while [ "$d" != "/" ]; do
+	if [ -f "$d/CMakeLists.txt" ]; then
+		grep -oE 'cxx_std_[0-9]+' "$d/CMakeLists.txt" | grep -oE '[0-9]+' | head -1
+		break
+	fi
+	d=$(dirname "$d")
+done
+'''
+when = '''
+d="$PWD"
+while [ "$d" != "/" ]; do
+	[ -f "$d/CMakeLists.txt" ] && exit 0
+	d=$(dirname "$d")
+done
+exit 1
+'''
+format = "([ $output]($style) )"
+style = "bold blue"
+
+[cmd_duration]
+min_time = 1000
+format = "[󰔟 $duration]($style) "
+style = "bold yellow"
+
+[status]
+disabled = false
+symbol = " "
+format = "[$symbol$status]($style) "
+style = "bold red"
