@@ -1,0 +1,127 @@
+# -----------------------------------------------------------------------------
+# Zsh basics
+# -----------------------------------------------------------------------------
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt SHARE_HISTORY
+setopt INTERACTIVE_COMMENTS
+
+autoload -Uz compinit
+compinit
+
+# -----------------------------------------------------------------------------
+# PATH additions
+# -----------------------------------------------------------------------------
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+
+# -----------------------------------------------------------------------------
+# Key bindings
+# -----------------------------------------------------------------------------
+
+bindkey -v
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^h' backward-delete-char
+
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
+
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
+# -----------------------------------------------------------------------------
+# fzf
+# -----------------------------------------------------------------------------
+
+if command -v fzf >/dev/null 2>&1; then
+	source <(fzf --zsh)
+fi
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+
+# -----------------------------------------------------------------------------
+# Aliases
+# -----------------------------------------------------------------------------
+
+alias v="nvim"
+
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gd="git diff"
+
+alias tree="eza --tree --icons"
+alias gtree="eza --tree --icons --git --git-ignore"
+
+alias cat="bat"
+alias fd="fd --hidden --exclude .git --exclude node_modules"
+alias rg="rg --hidden --glob='!.git/*'"
+
+ll() {
+	eza -la --git --icons --group-directories-first "$@"
+}
+
+cdl() {
+	builtin cd "$@" && ll
+}
+
+# -----------------------------------------------------------------------------
+# Starship prompt
+# -----------------------------------------------------------------------------
+
+if command -v starship >/dev/null 2>&1; then
+	eval "$(starship init zsh)"
+fi
+
+# -----------------------------------------------------------------------------
+# Vulkan / MoltenVK
+# -----------------------------------------------------------------------------
+# Needed on macOS so the Vulkan loader can find MoltenVK and validation layers
+
+if command -v brew >/dev/null 2>&1; then
+	MOLTENVK_ICD="$(brew --prefix molten-vk)/share/vulkan/icd.d/MoltenVK_icd.json"
+	VULKAN_LAYER_PATH="$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d"
+
+	if [[ -f "$MOLTENVK_ICD" ]]; then
+		export VK_ICD_FILENAMES="$MOLTENVK_ICD"
+		export VK_DRIVER_FILES="$MOLTENVK_ICD"
+	fi
+
+	if [[ -d "$VULKAN_LAYER_PATH" ]]; then
+		export VK_LAYER_PATH="$VULKAN_LAYER_PATH"
+	fi
+fi
+
+# -----------------------------------------------------------------------------
+# SSH AUTHENTICATION SOCKET
+# -----------------------------------------------------------------------------
+
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+
+# -----------------------------------------------------------------------------
+# Zsh plugins
+# -----------------------------------------------------------------------------
+
+if [[ -r "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+	source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c7086"
+fi
+
+if [[ -r "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+	source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi

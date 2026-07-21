@@ -1,0 +1,150 @@
+# -----------------------------------------------------------------------------
+# Core CLI
+# -----------------------------------------------------------------------------
+
+brew "chezmoi"
+brew "curl"
+brew "git"
+brew "gitleaks"
+brew "gh"
+brew "neovim"
+brew "pkg-config"
+
+# -----------------------------------------------------------------------------
+# Shell / terminal utilities
+# -----------------------------------------------------------------------------
+
+brew "fd"
+brew "fzf"
+brew "eza"
+brew "bat"
+brew "cloc"
+brew "ripgrep"
+brew "starship"
+
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# -----------------------------------------------------------------------------
+# Build tooling
+# -----------------------------------------------------------------------------
+
+brew "cmake"
+brew "ninja"
+brew "llvm"
+
+# -----------------------------------------------------------------------------
+# Languages
+# -----------------------------------------------------------------------------
+
+brew "go"
+
+# -----------------------------------------------------------------------------
+# Language servers / formatters / linters
+# -----------------------------------------------------------------------------
+
+# Bash
+brew "bash-language-server"
+brew "shellcheck"
+brew "shfmt"
+
+# Lua
+brew "lua-language-server"
+brew "stylua"
+
+# Go
+brew "gopls"
+brew "gofumpt"
+brew "goimports"
+brew "golangci-lint"
+
+# SQL
+brew "sqlfluff"
+
+# -----------------------------------------------------------------------------
+# Game engine / graphics basics
+# -----------------------------------------------------------------------------
+
+brew "glfw"
+
+# Vulkan / MoltenVK
+brew "vulkan-headers"
+brew "vulkan-loader"
+brew "vulkan-validationlayers"
+brew "vulkan-tools"
+brew "molten-vk"
+
+# Check later when needing them but these should be correct - does need review:
+# brew "shaderc"       # provides glslc
+# brew "spirv-tools"   # SPIR-V validation/disassembly/optimization
+# brew "spirv-cross"   # SPIR-V reflection/cross-compilation
+# brew "glslang"       # Khronos GLSL/HLSL -> SPIR-V frontend
+
+# -----------------------------------------------------------------------------
+# Profiling
+# -----------------------------------------------------------------------------
+
+brew "tracy"
+
+# -----------------------------------------------------------------------------
+# Testing
+# -----------------------------------------------------------------------------
+
+brew "googletest"
+
+# -----------------------------------------------------------------------------
+# Database
+# -----------------------------------------------------------------------------
+
+brew "postgresql@18"
+brew "sqlc"
+brew "golang-migrate"
+
+# -----------------------------------------------------------------------------
+# 1Password
+# -----------------------------------------------------------------------------
+
+cask "1password"
+cask "1password-cli"
+
+# -----------------------------------------------------------------------------
+# GUI apps
+# -----------------------------------------------------------------------------
+
+cask "discord"
+cask "ghostty"
+cask "google-chrome"
+cask "spotify"
+cask "steam"
+cask "utm"
+cask "visual-studio-code"
+cask "webex"
+cask "whatsapp"
+
+# -----------------------------------------------------------------------------
+# Fonts
+# -----------------------------------------------------------------------------
+
+cask "font-jetbrains-mono-nerd-font"
+
+# -----------------------------------------------------------------------------
+# Mac App Store
+# -----------------------------------------------------------------------------
+
+brew "mas"
+
+mas "1Password for Safari", id: 1569813296
+
+mas "Xcode", id: 497799835
+
+mas "Final Cut Pro", id: 1631624924
+mas "Logic Pro", id: 1615087040
+mas "Pixelmator Pro", id: 6746662575
+
+mas "Keynote", id: 361285480
+mas "Pages", id: 361309726
+mas "Numbers", id: 361304891
+
+mas "Motion", id: 6746637149
+mas "Compressor", id: 6746516157
+mas "MainStage", id: 6746637089
