@@ -7,7 +7,7 @@ Made to ensure I can easily re-setup my device as I was burnt trying to port to 
 ## Bootstrap on a new machine
 
 ```bash
-git clone git@github.com:<Tobias-Sharman>/dotfiles.git ~/dotfiles
+git clone git@github.com:Tobias-Sharman/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
