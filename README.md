@@ -1,4 +1,4 @@
-# dotfiles
+# Dotfiles
 
 Personal macOS configuration, managed with [chezmoi](https://www.chezmoi.io/).
 
