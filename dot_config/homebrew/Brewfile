@@ -48,9 +48,9 @@ brew "bash-language-server"
 brew "shellcheck"
 brew "shfmt"
 
-# Lua
-brew "lua-language-server"
-brew "stylua"
+# Docker
+brew "docker-language-server"
+brew "hadolint"
 
 # Go
 brew "gopls"
@@ -58,8 +58,15 @@ brew "gofumpt"
 brew "goimports"
 brew "golangci-lint"
 
+# Lua
+brew "lua-language-server"
+brew "stylua"
+
 # SQL
 brew "sqlfluff"
+
+# YAML
+brew "yamlfmt"
 
 # -----------------------------------------------------------------------------
 # Game engine / graphics basics
