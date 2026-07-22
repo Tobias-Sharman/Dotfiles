@@ -37,6 +37,10 @@ function M.setup()
 		sql = {
 			"sqlfluff",
 		},
+
+		dockerfile = {
+			"hadolint",
+		},
 	}
 end
 

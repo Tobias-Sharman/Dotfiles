@@ -65,6 +65,10 @@ function M.setup()
 				"gofumpt",
 			},
 
+			yaml = {
+				"yamlfmt",
+			},
+
 			["*"] = {
 				"trim_whitespace",
 				"trim_newlines",

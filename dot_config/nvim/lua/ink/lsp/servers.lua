@@ -4,6 +4,7 @@ local servers = {
 	"clangd",
 	"gopls",
 	"lua_ls",
+	"docker_language_server",
 	-- "nil",
 }
 
