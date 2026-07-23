@@ -41,6 +41,10 @@ function M.setup()
 		dockerfile = {
 			"hadolint",
 		},
+
+		yaml = {
+			"ansible_lint",
+		},
 	}
 end
 
@@ -68,6 +72,18 @@ function M.lint(bufnr)
 		"go.mod",
 		".git",
 	}) then
+		return
+	end
+
+	if
+		ft == "yaml"
+		and not has_name_upward(bufnr, {
+			"ansible.cfg",
+			"roles",
+			"playbook.yml",
+			"site.yml",
+		})
+	then
 		return
 	end
 

@@ -43,6 +43,10 @@ brew "go"
 # Language servers / formatters / linters
 # -----------------------------------------------------------------------------
 
+# Ansible
+brew "ansible-language-server"
+brew "ansible-lint"
+
 # Bash
 brew "bash-language-server"
 brew "shellcheck"
@@ -64,6 +68,9 @@ brew "stylua"
 
 # SQL
 brew "sqlfluff"
+
+# Terraform
+brew "terraform-ls"
 
 # YAML
 brew "yamlfmt"
@@ -127,6 +134,13 @@ cask "utm"
 cask "visual-studio-code"
 cask "webex"
 cask "whatsapp"
+cask "windows-app"
+
+# -----------------------------------------------------------------------------
+# VPN
+# -----------------------------------------------------------------------------
+
+brew "openconnect"
 
 # -----------------------------------------------------------------------------
 # Fonts

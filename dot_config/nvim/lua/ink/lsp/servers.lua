@@ -4,7 +4,9 @@ local servers = {
 	"clangd",
 	"gopls",
 	"lua_ls",
-	"docker_language_server",
+	"docker-language-server",
+	"ansible-language-server",
+	"terraform-ls",
 	-- "nil",
 }
 

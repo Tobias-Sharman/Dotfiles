@@ -65,6 +65,10 @@ function M.setup()
 				"gofumpt",
 			},
 
+			terraform = {
+				"terraform_fmt",
+			},
+
 			yaml = {
 				"yamlfmt",
 			},
