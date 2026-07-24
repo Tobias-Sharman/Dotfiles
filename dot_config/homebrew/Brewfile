@@ -40,6 +40,12 @@ brew "llvm"
 brew "go"
 
 # -----------------------------------------------------------------------------
+# Infrastructure / automation
+# -----------------------------------------------------------------------------
+
+brew "ansible"
+
+# -----------------------------------------------------------------------------
 # Language servers / formatters / linters
 # -----------------------------------------------------------------------------
 
@@ -79,20 +85,15 @@ brew "yamlfmt"
 # Game engine / graphics basics
 # -----------------------------------------------------------------------------
 
-brew "glfw"
-
-# Vulkan / MoltenVK
 brew "vulkan-headers"
 brew "vulkan-loader"
 brew "vulkan-validationlayers"
 brew "vulkan-tools"
 brew "molten-vk"
+brew "spirv-tools"
 
 # Check later when needing them but these should be correct - does need review:
-# brew "shaderc"       # provides glslc
-# brew "spirv-tools"   # SPIR-V validation/disassembly/optimization
 # brew "spirv-cross"   # SPIR-V reflection/cross-compilation
-# brew "glslang"       # Khronos GLSL/HLSL -> SPIR-V frontend
 
 # -----------------------------------------------------------------------------
 # Profiling

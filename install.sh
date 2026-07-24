@@ -3,9 +3,9 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/dotfiles"
 
-info()  { printf "\033[1;34m==>\033[0m %s\n" "$1"; }
-warn()  { printf "\033[1;33m==>\033[0m %s\n" "$1"; }
-ok()    { printf "\033[1;32m==>\033[0m %s\n" "$1"; }
+info() { printf "\033[1;34m==>\033[0m %s\n" "$1"; }
+warn() { printf "\033[1;33m==>\033[0m %s\n" "$1"; }
+ok() { printf "\033[1;32m==>\033[0m %s\n" "$1"; }
 
 if [[ "$(uname)" != "Darwin" ]]; then
 	echo "This install script is macOS-only." >&2
@@ -46,6 +46,47 @@ fi
 
 info "Installing packages from Brewfile..."
 brew bundle --file="$DOTFILES_DIR/dot_config/homebrew/Brewfile"
+
+# -----------------------------------------------------------------------------
+# Slang shader compiler (not available via Homebrew)
+# -----------------------------------------------------------------------------
+SLANG_INSTALL_DIR="$HOME/.local/slang"
+
+if [[ -x "$SLANG_INSTALL_DIR/bin/slangc" ]]; then
+	ok "Slang already installed."
+else
+	info "Installing Slang shader compiler..."
+
+	SLANG_ARCH="$(uname -m)"
+	if [[ "$SLANG_ARCH" == "arm64" ]]; then
+		SLANG_ARCH="aarch64"
+	fi
+
+	SLANG_ASSET_URL="$(curl -fsSL https://api.github.com/repos/shader-slang/slang/releases/latest |
+		grep "browser_download_url" |
+		grep "macos-${SLANG_ARCH}\.tar\.gz" |
+		grep -v "debug-info" |
+		head -n1 |
+		cut -d '"' -f4)"
+
+	if [[ -z "$SLANG_ASSET_URL" ]]; then
+		warn "Could not find a Slang release asset for macos-${SLANG_ARCH}. Skipping — install manually from https://github.com/shader-slang/slang/releases"
+	else
+		mkdir -p "$SLANG_INSTALL_DIR"
+		curl -fsSL "$SLANG_ASSET_URL" | tar -xz -C "$SLANG_INSTALL_DIR" --strip-components=1
+		ok "Slang installed to $SLANG_INSTALL_DIR"
+	fi
+fi
+
+# -----------------------------------------------------------------------------
+# Ansible collections
+# -----------------------------------------------------------------------------
+if command -v ansible-galaxy >/dev/null 2>&1; then
+	info "Installing Ansible collections..."
+	ansible-galaxy collection install community.crypto
+else
+	warn "ansible-galaxy not found — skipping collection install."
+fi
 
 # -----------------------------------------------------------------------------
 # chezmoi apply
