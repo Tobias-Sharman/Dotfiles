@@ -18,8 +18,28 @@ function M.setup()
 	local lint = require("lint")
 
 	lint.linters_by_ft = {
+		c = {
+			"clangtidy",
+		},
+
+		cpp = {
+			"clangtidy",
+		},
+
+		objc = {
+			"clangtidy",
+		},
+
+		objcpp = {
+			"clangtidy",
+		},
+
 		go = {
 			"golangcilint",
+		},
+
+		python = {
+			"ruff",
 		},
 
 		sh = {
@@ -36,6 +56,10 @@ function M.setup()
 
 		sql = {
 			"sqlfluff",
+		},
+
+		terraform = {
+			"tflint",
 		},
 
 		dockerfile = {
@@ -56,12 +80,9 @@ function M.lint(bufnr)
 	local ft = vim.bo[bufnr].filetype
 
 	if
-		ft == "sql"
+		(ft == "c" or ft == "cpp" or ft == "objc" or ft == "objcpp")
 		and not has_name_upward(bufnr, {
-			".sqlfluff",
-			"pyproject.toml",
-			"setup.cfg",
-			"tox.ini",
+			"compile_commands.json",
 		})
 	then
 		return
@@ -72,6 +93,18 @@ function M.lint(bufnr)
 		"go.mod",
 		".git",
 	}) then
+		return
+	end
+
+	if
+		ft == "sql"
+		and not has_name_upward(bufnr, {
+			".sqlfluff",
+			"pyproject.toml",
+			"setup.cfg",
+			"tox.ini",
+		})
+	then
 		return
 	end
 

@@ -44,6 +44,16 @@ function M.setup()
 				"stylua",
 			},
 
+			go = {
+				"goimports",
+				"gofumpt",
+			},
+
+			python = {
+				"ruff_fix",
+				"ruff_format",
+			},
+
 			sh = {
 				"shfmt",
 			},
@@ -60,12 +70,11 @@ function M.setup()
 				"sqlfluff",
 			},
 
-			go = {
-				"goimports",
-				"gofumpt",
+			terraform = {
+				"terraform_fmt",
 			},
 
-			terraform = {
+			["terraform-vars"] = {
 				"terraform_fmt",
 			},
 

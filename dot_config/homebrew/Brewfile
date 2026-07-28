@@ -44,6 +44,7 @@ brew "go"
 # -----------------------------------------------------------------------------
 
 brew "ansible"
+brew "hashicorp/tap/terraform", trusted: true
 
 # -----------------------------------------------------------------------------
 # Language servers / formatters / linters
@@ -72,11 +73,16 @@ brew "golangci-lint"
 brew "lua-language-server"
 brew "stylua"
 
+# Python
+brew "basedpyright"
+brew "ruff"
+
 # SQL
 brew "sqlfluff"
 
 # Terraform
 brew "terraform-ls"
+cask "terraform-linters/tap/tflint", trusted: true
 
 # YAML
 brew "yamlfmt"
@@ -116,6 +122,12 @@ brew "sqlc"
 brew "golang-migrate"
 
 # -----------------------------------------------------------------------------
+# AWS
+# -----------------------------------------------------------------------------
+
+brew "awscli"
+
+# -----------------------------------------------------------------------------
 # 1Password
 # -----------------------------------------------------------------------------
 
@@ -126,9 +138,11 @@ cask "1password-cli"
 # GUI apps
 # -----------------------------------------------------------------------------
 
+cask "anki"
 cask "discord"
 cask "ghostty"
 cask "google-chrome"
+cask "protonvpn"
 cask "spotify"
 cask "steam"
 cask "utm"

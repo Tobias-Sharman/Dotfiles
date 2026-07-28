@@ -2,11 +2,13 @@ local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 local servers = {
 	"ansible-language-server",
+	"basedpyright",
 	"bash-language-server",
 	"clangd",
 	"docker-language-server",
 	"gopls",
 	"lua_ls",
+	"slangd",
 	"terraform-ls",
 	-- "nil",
 }

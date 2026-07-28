@@ -25,6 +25,8 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
 export PATH="$HOME/.local/slang/bin:$PATH"
 
+export DYLD_FALLBACK_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+
 # -----------------------------------------------------------------------------
 # Key bindings
 # -----------------------------------------------------------------------------
@@ -95,14 +97,12 @@ fi
 # Needed on macOS so the Vulkan loader can find MoltenVK and validation layers
 
 if command -v brew >/dev/null 2>&1; then
-	MOLTENVK_ICD="$(brew --prefix molten-vk)/share/vulkan/icd.d/MoltenVK_icd.json"
+	MOLTENVK_ICD="$(brew --prefix molten-vk)/etc/vulkan/icd.d/MoltenVK_icd.json"
 	VULKAN_LAYER_PATH="$(brew --prefix vulkan-validationlayers)/share/vulkan/explicit_layer.d"
-
 	if [[ -f "$MOLTENVK_ICD" ]]; then
 		export VK_ICD_FILENAMES="$MOLTENVK_ICD"
 		export VK_DRIVER_FILES="$MOLTENVK_ICD"
 	fi
-
 	if [[ -d "$VULKAN_LAYER_PATH" ]]; then
 		export VK_LAYER_PATH="$VULKAN_LAYER_PATH"
 	fi

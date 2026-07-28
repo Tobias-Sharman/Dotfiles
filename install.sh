@@ -88,6 +88,8 @@ else
 	warn "ansible-galaxy not found — skipping collection install."
 fi
 
+# TODO: Add cisco packet tracer
+
 # -----------------------------------------------------------------------------
 # chezmoi apply
 # -----------------------------------------------------------------------------
