@@ -84,6 +84,7 @@ fi
 if command -v ansible-galaxy >/dev/null 2>&1; then
 	info "Installing Ansible collections..."
 	ansible-galaxy collection install community.crypto
+	ansible-galaxy collection install amazon.aws
 else
 	warn "ansible-galaxy not found — skipping collection install."
 fi

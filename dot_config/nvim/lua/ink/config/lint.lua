@@ -108,6 +108,12 @@ function M.lint(bufnr)
 		return
 	end
 
+	if ft == "terraform" and not has_name_upward(bufnr, {
+		".tflint.hcl",
+	}) then
+		return
+	end
+
 	if
 		ft == "yaml"
 		and not has_name_upward(bufnr, {
