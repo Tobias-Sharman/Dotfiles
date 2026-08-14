@@ -46,6 +46,7 @@ brew "uv"
 
 brew "ansible"
 brew "hashicorp/tap/terraform", trusted: true
+brew "kubectl"
 
 # -----------------------------------------------------------------------------
 # Language servers / formatters / linters
@@ -157,6 +158,7 @@ cask "windows-app"
 # -----------------------------------------------------------------------------
 
 brew "openconnect"
+brew "wireguard-tools"
 
 # -----------------------------------------------------------------------------
 # Fonts
