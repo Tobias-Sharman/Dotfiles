@@ -70,6 +70,22 @@ function M.setup()
 			"ansible_lint",
 		},
 	}
+
+	local clangtidy_args = {
+		"--quiet",
+		"--checks=-*,clang-analyzer-*",
+	}
+
+	if vim.fn.has("mac") == 1 then
+		local sdk = vim.trim(vim.fn.system({
+			"xcrun",
+			"--show-sdk-path",
+		}))
+
+		table.insert(clangtidy_args, "--extra-arg=-isysroot" .. sdk)
+	end
+
+	lint.linters.clangtidy.args = clangtidy_args
 end
 
 function M.lint(bufnr)

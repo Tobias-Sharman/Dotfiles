@@ -21,12 +21,15 @@ compinit
 # PATH additions
 # -----------------------------------------------------------------------------
 
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+if [[ "$OSTYPE" == darwin* ]]; then
+	export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+	export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+
+	export DYLD_FALLBACK_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+fi
+
 export PATH="$HOME/.local/slang/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-
-export DYLD_FALLBACK_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH"
 
 # -----------------------------------------------------------------------------
 # Key bindings

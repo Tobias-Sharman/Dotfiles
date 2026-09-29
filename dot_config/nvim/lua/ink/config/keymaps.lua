@@ -97,6 +97,18 @@ vim.keymap.set("n", "<leader>fd", fzf.diagnostics_document, {
 	desc = "Find document diagnostics",
 })
 
+vim.keymap.set("n", "<leader>fD", fzf.diagnostics_workspace, {
+	desc = "Find workspace diagnostics",
+})
+
+vim.keymap.set("n", "<leader>ft", commands.clang_tidy_fast, {
+	desc = "Run clang-tidy over the project without the analyser",
+})
+
+vim.keymap.set("n", "<leader>fT", commands.clang_tidy_full, {
+	desc = "Run clang-tidy over the project with the analyser",
+})
+
 -- ============================================================================
 -- Git visibility
 -- ============================================================================

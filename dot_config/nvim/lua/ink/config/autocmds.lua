@@ -68,6 +68,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	desc = "Run configured linters after saving",
 	pattern = {
+		"*.c",
+		"*.cpp",
 		"*.go",
 		"*.sh",
 		"*.bash",
@@ -77,6 +79,37 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 	callback = function(args)
 		lint.lint(args.buf)
+	end,
+})
+
+-- ============================================================================
+-- Clang-tidy project diagnostics
+-- ============================================================================
+
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+	group = group,
+	desc = "Hide project clang-tidy results another source already reports",
+	callback = function(args)
+		commands.clang_tidy_refresh(args.buf)
+	end,
+})
+
+vim.api.nvim_create_autocmd({
+	"BufReadPost",
+	"BufWritePost",
+	"FileChangedShellPost",
+}, {
+	group = group,
+	desc = "Drop project clang-tidy results for files changed since the run",
+	pattern = {
+		"*.c",
+		"*.cpp",
+		"*.h",
+		"*.hpp",
+	},
+
+	callback = function(args)
+		commands.clang_tidy_refresh(args.buf)
 	end,
 })
 
